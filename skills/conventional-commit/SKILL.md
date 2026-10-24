@@ -2,7 +2,7 @@
 name: conventional-commit
 description: Use when drafting, formatting, or validating Git commit messages to ensure strict compliance with the Conventional Commits specification.
 metadata:
-  version: "0.1.0"
+  version: "0.0.1"
 ---
 # Conventional Commit Skill
 
