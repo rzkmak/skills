@@ -30,4 +30,9 @@ bash scripts/check-commit-msg.sh "<commit-message-header>"
 # multi-commit plan (validates every header and enforces max 5 commits)
 bash scripts/check-commit-plan.sh "<header-1>" "<header-2>" "<header-3>"
 ```
-If a script exits with a non-zero code, read `stderr`, fix the messages (or merge the plan), and re-run until it outputs `PASS`.
+### Retry Limit
+If a script exits with a non-zero code, read `stderr`, fix the messages (or merge the plan), and re-run. Retry at most 5 times — do not loop forever.
+
+If verification still fails after 5 retries, stop retrying and rely on your own judgment:
+- If you are confident the message or plan is valid and the validator is wrong for this case, proceed and state your reasoning next to the commit.
+- If you are not confident, ask the user how to proceed instead of guessing.

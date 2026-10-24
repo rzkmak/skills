@@ -59,7 +59,9 @@ verify itself before committing:
 ```
 
 If the validator exits non-zero, the agent reads `stderr`, fixes the message,
-and re-runs until it passes.
+and re-runs — at most 5 times. After 5 failed retries it stops looping and
+falls back to its own judgment: proceed with stated reasoning that the
+validator is wrong for the case, or ask the user — never keep guessing.
 
 For large diffs, the skill guides splitting into at most 5 single-purpose
 commits (from known context, or by inferring purpose from the changes) and

@@ -71,7 +71,7 @@ Before completing a task that involves this skill, you MUST validate the work us
 \`\`\`bash
 bash scripts/check.sh "<input>"
 \`\`\`
-If the script exits with a non-zero code, read \`stderr\`, fix the problem, and re-run until it outputs \`PASS\`.
+If the script exits with a non-zero code, read \`stderr\`, fix the problem, and re-run. Retry at most 5 times; if it still fails, stop retrying and rely on your own judgment (proceed with stated reasoning, or ask the user) instead of looping forever.
 EOF
 
 # --- scripts/check.sh -------------------------------------------------------
