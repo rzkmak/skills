@@ -8,5 +8,11 @@
   },
   "repository": "https://github.com/rzkmak/skills",
   "license": "Apache-2.0",
-  "keywords": ["git", "conventional-commits", "workflow", "agent-skills", "zero-mcp"]
+  "keywords": [
+    "git",
+    "conventional-commits",
+    "workflow",
+    "agent-skills",
+    "zero-mcp"
+  ]
 }
