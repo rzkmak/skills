@@ -1,4 +1,4 @@
-# rskills
+# skills
 
 A **Zero-MCP Agent Plugin** ([Agent Plugins 1.0](https://agent-plugins.org)) that
 provides verifiable developer workflow skills. Every skill ships a stateless CLI
@@ -27,7 +27,7 @@ is never shipped with the plugin. The published artifact contains **no
 Place this repository inside your agent's plugin directory:
 
 ```bash
-git clone <this-repo> <your-agent-plugins-dir>/rskills
+git clone <this-repo> <your-agent-plugins-dir>/skills
 ```
 
 The manifest is `plugin.json`; skills are auto-discovered from `skills/`.
