@@ -29,7 +29,8 @@ echo "[OK] frontmatter: name=$SKILL_NAME, description present"
 # 2. Syntax-check the runtime validators.
 bash -n "$CHECKER"
 bash -n "$PLAN_CHECKER"
-echo "[OK] bash -n: scripts/check-commit-msg.sh, scripts/check-commit-plan.sh"
+bash -n "$SKILL_DIR/scripts/install-command.sh"
+echo "[OK] bash -n: check-commit-msg.sh, check-commit-plan.sh, install-command.sh"
 
 # 3. Run the dataset judge.
 python3 "$SCRIPT_DIR/judge.py"

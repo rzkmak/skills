@@ -36,3 +36,11 @@ If a script exits with a non-zero code, read `stderr`, fix the messages (or merg
 If verification still fails after 5 retries, stop retrying and rely on your own judgment:
 - If you are confident the message or plan is valid and the validator is wrong for this case, proceed and state your reasoning next to the commit.
 - If you are not confident, ask the user how to proceed instead of guessing.
+
+## Slash Command (/commit)
+This skill ships an optional explicit entry point: the `/commit` command for OpenCode (`commands/commit.md`). If the user invokes `/commit` and it is not installed, offer to install it with the bundled installer:
+```bash
+bash scripts/install-command.sh          # into the current project (.opencode/commands/)
+bash scripts/install-command.sh global   # for all projects (~/.config/opencode/commands/)
+```
+Only install the command when the user asks for it.
