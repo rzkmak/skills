@@ -74,6 +74,20 @@ validates the whole plan upfront:
 # PASS: Valid commit plan (3 commits, max 5)
 ```
 
+## Commands (OpenCode)
+
+Skills are invoked by the model when a task matches their description; commands
+are explicit entry points you type. This repo serves both:
+
+- `.opencode/commands/commit.md` → `/commit [instructions]` — drafts, splits,
+  and validates the current changes using the `conventional-commit` skill, with
+  the diff summary attached automatically.
+- `opencode.json` registers `"skills": ["./skills"]`, so opening this repo in
+  OpenCode makes every skill in `skills/` available with no install step.
+
+Commands are OpenCode-specific and project-scoped; to use `/commit` in other
+projects, copy the file to `~/.config/opencode/commands/`.
+
 ## Development (OpenCode + Context7)
 
 This repository is developed inside **OpenCode** with the **Context7 MCP**
@@ -112,7 +126,10 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
 
 ```text
 .
-├── opencode.json            # dev-time Context7 MCP config (not part of the plugin artifact)
+├── opencode.json            # dev-time config: Context7 MCP + skills source registration
+├── .opencode/
+│   └── commands/
+│       └── commit.md        # /commit — explicit entry into the conventional-commit skill
 ├── plugin.json              # Agent Plugins 1.0 manifest (Zero-MCP: no mcp.json)
 ├── AGENTS.md                # authoring guide for OpenCode agents
 ├── README.md
