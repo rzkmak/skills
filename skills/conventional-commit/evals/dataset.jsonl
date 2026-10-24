@@ -1,0 +1,5 @@
+{"id": "valid_feat_with_scope", "input": "feat(auth): add jwt token refresh endpoint", "expected_exit_code": 0, "required_skill_terms": ["check-commit-msg.sh", "feat"]}
+{"id": "valid_Breaking_fix", "input": "fix(parser)!: handle empty payload without panic", "expected_exit_code": 0, "required_skill_terms": ["check-commit-msg.sh"]}
+{"id": "invalid_missing_type", "input": "updated readme and fixed typo", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
+{"id": "invalid_trailing_period", "input": "chore(deps): bump version to 1.2.0.", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
+{"id": "invalid_uppercase_desc", "input": "feat(api): Add new user route", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
