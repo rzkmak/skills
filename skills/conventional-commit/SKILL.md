@@ -12,8 +12,8 @@ metadata:
 3. Keep the header line under 72 characters, imperative mood, lowercase description, and no trailing period.
 
 ## Mandatory Verification Step
-Before presenting a commit message or running `git commit`, you MUST validate the message using the bundled script:
+Before presenting a commit message or running `git commit`, you MUST validate the message using the bundled script (run from this skill's directory; paths are relative to the skill root):
 ```bash
-./skills/conventional-commit/scripts/check-commit-msg.sh "<commit-message-header>"
+bash scripts/check-commit-msg.sh "<commit-message-header>"
 ```
 If the script exits with a non-zero code, read `stderr`, fix the message, and re-run until it outputs `PASS`.

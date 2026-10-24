@@ -67,9 +67,9 @@ metadata:
 2. Keep every rule concrete so evals can assert pass/fail outcomes.
 
 ## Mandatory Verification Step
-Before completing a task that involves this skill, you MUST validate the work using the bundled script:
+Before completing a task that involves this skill, you MUST validate the work using the bundled script (run from this skill's directory; paths are relative to the skill root):
 \`\`\`bash
-./skills/$SKILL_NAME/scripts/check.sh "<input>"
+bash scripts/check.sh "<input>"
 \`\`\`
 If the script exits with a non-zero code, read \`stderr\`, fix the problem, and re-run until it outputs \`PASS\`.
 EOF
