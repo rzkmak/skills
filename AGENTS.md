@@ -20,5 +20,18 @@ Whenever you create, modify, or validate `plugin.json` or `skills/*/SKILL.md`, q
    - Edit `skills/<skill-name>/SKILL.md` (ensure `name` matches the folder name and is lowercase alphanumeric with hyphens).
    - Add deterministic helper or validation scripts in `skills/<skill-name>/scripts/`.
    - Add at least 4 pass/fail test fixtures in `skills/<skill-name>/evals/dataset.jsonl`.
-4. **Evaluate:** Run `./skills/<skill-name>/evals/run_eval.sh`. Do not mark a task complete until it exits with code `0`.
+4. **Evaluate:** Run `./skills/<skill-name>/evals/run_eval.sh`. Do not mark a task complete until it exits with code `0`. If the skill has an LLM eval (`evals/run_eval_llm.sh`, see §4) and you changed its `SKILL.md` guidance, run that too — it is optional, never a completion gate.
 5. **Release (only on explicit request):** When — and only when — the user asks for a release, run `./scripts/release.sh <MAJOR.MINOR.PATCH> [--changed-only]` to execute all skill evals, sync versions, and create a Git tag. Never choose the version, the timing, or whether to release at all by yourself.
+
+## 4. LLM Evals (deepeval, Optional Suite)
+Deterministic evals (`evals/run_eval.sh`) remain the blocking gate: they must pass with exit code `0` and never require network access or API keys. LLM-based behavioral evals are a separate, optional suite next to them.
+
+1. **Environment (always):** Every LLM evaluation in this repository — any skill, any script, present or future — takes its endpoint, credentials, and model exclusively from these three environment variables, and from nothing else:
+   - `OPENAI_BASE_URL` — the OpenAI-compatible endpoint
+   - `OPENAI_API_KEY` — its key
+   - `OPENAI_DEFAULT_MODEL` — the model to use
+   Never hardcode an endpoint, key, or model name anywhere in the repo, and never invent alternative variable names. The key value is never echoed, logged, or written to any file — scripts may only check that the variables are set. A missing variable is a loud error, never a silent fallback. Generation and judging share the same endpoint and model.
+2. **Layout:** LLM evals live at `skills/<skill-name>/evals/llm/` as pytest tests (e.g. `test_<skill-name>.py`), with the entry point at `skills/<skill-name>/evals/run_eval_llm.sh`.
+3. **Framework:** Use [deepeval](https://github.com/confident-ai/deepeval) (`GEval` as the judge). `deepeval` is a test-only dependency: never import it from `skills/*/scripts/` or the deterministic gate. `run_eval_llm.sh` installs it into a local venv at `evals/llm/.venv` (gitignored, never committed).
+4. **When it runs:** Never wire it into `run_eval.sh`, CI gates, or release checks, and never require exit code `0` from it to mark a task complete — judge scores are probabilistic and it costs tokens. Run it explicitly when changing a skill's `SKILL.md` guidance, or when the user asks.
+5. **Grading pattern:** The model under test generates behavior with `SKILL.md` in context. Bundled deterministic checkers grade everything they can (formats, exit codes, commit-count ranges); `GEval` judges only what checkers cannot express (splitting quality, type semantics). Reference plans in a scenario anchor the judge and are compared semantically, never literally.
