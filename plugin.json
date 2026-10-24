@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "git-workflow-skills",
+  "name": "rskills",
   "version": "0.1.0",
   "description": "Zero-MCP Agent Plugin providing verifiable developer workflow skills with embedded evaluation gates."
 }
