@@ -42,4 +42,4 @@ This skill ships an optional explicit entry point: the `/commit` command (`comma
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rzkmak/skills/main/scripts/install-commands.sh | bash
 ```
-or, from a checkout of the repo: `./scripts/install-commands.sh [project|global] [agents]` (agents default to `opencode,claude-code`). Only install commands when the user asks for it.
+or, from a checkout of the repo: `./scripts/install-commands.sh [global|project] [agents]` (scope defaults to `global`, agents to `opencode,claude-code`). Only install commands when the user asks for it.

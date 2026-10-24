@@ -6,11 +6,11 @@
 # the whole repo and installs them into each selected agent's commands directory.
 #
 # Usage:
-#   ./scripts/install-commands.sh [project|global] [agents] [repo-dir]
-#   ./scripts/install-commands.sh --verify [agents]
+#   ./scripts/install-commands.sh [global|project] [agents] [repo-dir]
+#   ./scripts/install-commands.sh --verify [global|project] [agents]
 #
-#   project  (default) install into the current project
-#   global   install into your home directory (all projects)
+#   global   (default) install into your home directory (all projects)
+#   project  install into the current project only
 #   agents   comma-separated list (default: opencode,claude-code)
 #
 # Agent targets:
@@ -29,9 +29,19 @@ REPO_URL="${REPO_URL:-https://github.com/rzkmak/skills.git}"
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 
-MODE="${1:-project}"
+VERIFY=""
+if [ "${1:-}" = "--verify" ]; then
+  VERIFY="1"
+  shift
+fi
+MODE="${1:-global}"
 AGENTS="${2:-opencode,claude-code}"
 EXPLICIT_DIR="${3:-}"
+
+case "$MODE" in
+  project|global) ;;
+  *) die "unknown mode '$MODE' (expected: project, global, or --verify)" ;;
+esac
 
 target_dir() {
   case "$1:$2" in
@@ -80,22 +90,22 @@ cleanup() { [ -n "$TMP_DIR" ] && rm -rf "$TMP_DIR"; return 0; }
 trap cleanup EXIT
 
 # ---------------------------------------------------------------- verify mode
-if [ "$MODE" = "--verify" ]; then
+if [ -n "$VERIFY" ]; then
   status=0
   checked=0
   OLDIFS="$IFS"
   IFS=','
   for agent in $AGENTS; do
-    proj_dir="$(target_dir "$agent" project)"
+    inst_dir="$(target_dir "$agent" "$MODE")"
     for template in "$REPO_DIR"/skills/*/commands/*.md; do
       [ -f "$template" ] || continue
       name="$(basename "$template")"
-      installed="$proj_dir/$name"
+      installed="$inst_dir/$name"
       if [ -f "$installed" ]; then
         checked=$((checked + 1))
         if ! diff -q "$installed" "$template" >/dev/null; then
           echo "ERROR: $installed differs from template $template" >&2
-          echo "       fix with: ./scripts/install-commands.sh project $AGENTS" >&2
+          echo "       fix with: ./scripts/install-commands.sh $MODE $AGENTS" >&2
           status=1
         fi
       fi
@@ -109,11 +119,6 @@ if [ "$MODE" = "--verify" ]; then
 fi
 
 # ---------------------------------------------------------------- install
-case "$MODE" in
-  project|global) ;;
-  *) die "unknown mode '$MODE' (expected: project, global, or --verify)" ;;
-esac
-
 # Command filenames must be unique repo-wide.
 seen_names=""
 for template in "$REPO_DIR"/skills/*/commands/*.md; do

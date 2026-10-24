@@ -85,12 +85,12 @@ are explicit entry points you type. This repo serves both:
   agents:
 
 ```bash
-# from anywhere (clones the repo if needed)
+# from anywhere (clones the repo if needed) — installs globally by default
 curl -fsSL https://raw.githubusercontent.com/rzkmak/skills/main/scripts/install-commands.sh | bash
 
 # or from a checkout: scope, agents, repo dir
-./scripts/install-commands.sh project opencode,claude-code
-./scripts/install-commands.sh global claude-code
+./scripts/install-commands.sh global opencode,claude-code
+./scripts/install-commands.sh project claude-code
 ```
 
 Targets: OpenCode `.opencode/commands/` (project) or
