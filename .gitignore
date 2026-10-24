@@ -1,16 +1,15 @@
 # macOS
 .DS_Store
 
-# Python bytecode (judge.py imports, if anyone ever byte-compiles)
+# Python bytecode & test caches
 __pycache__/
-*.py[cod]
+*.pyc
+.pytest_cache/
 
-# Transient sed temp files from scripts/release.sh version bumps
-*.tmp
+# Per-skill LLM eval virtualenvs
+skills/*/evals/llm/.venv/
 
-# Zero-MCP policy: an MCP config must never ship with this plugin
-mcp.json
-
-# Editors
-.idea/
-.vscode/
+# deepeval local run artifacts
+.deepeval/
+.deepeval_cache/
+deepeval.json
