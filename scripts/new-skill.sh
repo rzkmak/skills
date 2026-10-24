@@ -58,7 +58,7 @@ cat > "$SKILL_DIR/SKILL.md" <<EOF
 name: $SKILL_NAME
 description: $SKILL_DESCRIPTION
 metadata:
-  version: "0.1.0"
+  version: "0.0.1"
 ---
 # $SKILL_NAME Skill
 
