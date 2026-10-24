@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "skills",
   "version": "0.0.1",
-  "description": "Zero-MCP Agent Plugin providing verifiable developer workflow skills with embedded evaluation gates.",
+  "description": "Personal agent skills by rzkmak — verifiable, zero-MCP developer workflow skills with embedded evaluation gates.",
   "author": {
     "name": "rzkmak"
   },

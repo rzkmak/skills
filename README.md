@@ -2,9 +2,8 @@
 
 [![skills.sh](https://skills.sh/b/rzkmak/skills)](https://skills.sh/rzkmak/skills)
 
-A **Zero-MCP Agent Plugin** ([Agent Plugins 1.0](https://agent-plugins.org)) that
-provides verifiable developer workflow skills. Every skill ships a stateless CLI
-validator plus an embedded evaluation gate, so agents prove their work with plain
+A personal collection of **Zero-MCP** agent skills ([Agent Plugins 1.0](https://agent-plugins.org)) by rzkmak —
+verifiable developer workflow skills, each with an embedded evaluation gate, so agents prove their work with plain
 scripts instead of calling MCP servers at runtime.
 
 ## Why Zero-MCP?
