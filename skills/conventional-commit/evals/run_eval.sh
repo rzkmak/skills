@@ -9,6 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_DIR="$(dirname "$SCRIPT_DIR")"
 SKILL_MD="$SKILL_DIR/SKILL.md"
 CHECKER="$SKILL_DIR/scripts/check-commit-msg.sh"
+PLAN_CHECKER="$SKILL_DIR/scripts/check-commit-plan.sh"
 
 # 1. Frontmatter: name must match the skill folder, description must be present.
 SKILL_NAME="$(basename "$SKILL_DIR")"
@@ -25,9 +26,10 @@ if [ -z "$front_desc" ]; then
 fi
 echo "[OK] frontmatter: name=$SKILL_NAME, description present"
 
-# 2. Syntax-check the runtime validator.
+# 2. Syntax-check the runtime validators.
 bash -n "$CHECKER"
-echo "[OK] bash -n: scripts/check-commit-msg.sh"
+bash -n "$PLAN_CHECKER"
+echo "[OK] bash -n: scripts/check-commit-msg.sh, scripts/check-commit-plan.sh"
 
 # 3. Run the dataset judge.
 python3 "$SCRIPT_DIR/judge.py"

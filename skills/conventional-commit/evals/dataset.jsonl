@@ -3,3 +3,9 @@
 {"id": "invalid_missing_type", "input": "updated readme and fixed typo", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
 {"id": "invalid_trailing_period", "input": "chore(deps): bump version to 1.2.0.", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
 {"id": "invalid_uppercase_desc", "input": "feat(api): Add new user route", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
+{"id": "valid_split_plan", "input_args": ["feat(auth): add jwt token refresh endpoint", "fix(parser): handle empty payload without panic", "docs: explain token refresh flow"], "checker": "check-commit-plan.sh", "expected_exit_code": 0, "required_skill_terms": ["check-commit-plan.sh"]}
+{"id": "valid_single_commit_plan", "input_args": ["chore: bump version to 1.2.0"], "checker": "check-commit-plan.sh", "expected_exit_code": 0, "required_skill_terms": ["check-commit-plan.sh"]}
+{"id": "invalid_plan_empty", "input_args": [], "checker": "check-commit-plan.sh", "expected_exit_code": 1, "required_skill_terms": ["check-commit-plan.sh"]}
+{"id": "invalid_plan_six_commits", "input_args": ["feat: one", "feat: two", "fix: three", "docs: four", "style: five", "test: six"], "checker": "check-commit-plan.sh", "expected_exit_code": 1, "required_skill_terms": ["max 5"]}
+{"id": "invalid_plan_bad_message", "input_args": ["feat(auth): add jwt token refresh endpoint", "Updated readme", "fix(parser): handle empty payload"], "checker": "check-commit-plan.sh", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
+{"id": "guide_splitting_rules", "input": "feat(core): add cache invalidation hook", "expected_exit_code": 0, "required_skill_terms": ["split the commits", "infer the purpose", "max 5"]}

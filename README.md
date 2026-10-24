@@ -61,6 +61,18 @@ verify itself before committing:
 If the validator exits non-zero, the agent reads `stderr`, fixes the message,
 and re-runs until it passes.
 
+For large diffs, the skill guides splitting into at most 5 single-purpose
+commits (from known context, or by inferring purpose from the changes) and
+validates the whole plan upfront:
+
+```bash
+./skills/conventional-commit/scripts/check-commit-plan.sh \
+  "feat(auth): add jwt token refresh endpoint" \
+  "fix(parser): handle empty payload" \
+  "docs: explain token refresh flow"
+# PASS: Valid commit plan (3 commits, max 5)
+```
+
 ## Development (OpenCode + Context7)
 
 This repository is developed inside **OpenCode** with the **Context7 MCP**
@@ -110,7 +122,8 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     └── conventional-commit/
         ├── SKILL.md
         ├── scripts/
-        │   └── check-commit-msg.sh
+        │   ├── check-commit-msg.sh
+        │   └── check-commit-plan.sh
         └── evals/
             ├── dataset.jsonl
             ├── judge.py

@@ -3,8 +3,13 @@
 
 Reads SKILL.md and evals/dataset.jsonl, then for every case:
   * asserts each required_skill_terms entry appears in SKILL.md, and
-  * executes scripts/check-commit-msg.sh with the case input and compares
-    the exit code against expected_exit_code.
+  * executes the case's checker script and compares the exit code
+    against expected_exit_code.
+
+A case may define:
+  input          — single string argument (default checker: check-commit-msg.sh)
+  input_args     — list of string arguments (for multi-argument checkers)
+  checker        — script name under scripts/ (default: check-commit-msg.sh)
 
 Exits 0 only when every case passes.
 """
@@ -18,7 +23,6 @@ EVALS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = EVALS_DIR.parent
 SKILL_MD = SKILL_DIR / "SKILL.md"
 DATASET = EVALS_DIR / "dataset.jsonl"
-CHECKER = SKILL_DIR / "scripts" / "check-commit-msg.sh"
 
 
 def load_cases():
@@ -29,6 +33,13 @@ def load_cases():
             if line:
                 cases.append(json.loads(line))
     return cases
+
+
+def build_argv(case):
+    checker = SKILL_DIR / "scripts" / case.get("checker", "check-commit-msg.sh")
+    if "input_args" in case:
+        return [str(checker)] + [str(arg) for arg in case["input_args"]]
+    return [str(checker), case.get("input", "")]
 
 
 def main():
@@ -43,11 +54,7 @@ def main():
             if term not in skill_md:
                 reasons.append(f"SKILL.md is missing required term {term!r}")
 
-        proc = subprocess.run(
-            [str(CHECKER), case.get("input", "")],
-            capture_output=True,
-            text=True,
-        )
+        proc = subprocess.run(build_argv(case), capture_output=True, text=True)
         if proc.returncode != case["expected_exit_code"]:
             reasons.append(
                 f"expected exit code {case['expected_exit_code']}, "
