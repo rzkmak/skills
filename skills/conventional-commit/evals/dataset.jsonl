@@ -10,4 +10,4 @@
 {"id": "invalid_plan_bad_message", "input_args": ["feat(auth): add jwt token refresh endpoint", "Updated readme", "fix(parser): handle empty payload"], "checker": "check-commit-plan.sh", "expected_exit_code": 1, "required_skill_terms": ["check-commit-msg.sh"]}
 {"id": "guide_splitting_rules", "input": "feat(core): add cache invalidation hook", "expected_exit_code": 0, "required_skill_terms": ["split the commits", "infer the purpose", "max 5"]}
 {"id": "guide_retry_limit", "input": "fix(ui): correct padding on mobile nav", "expected_exit_code": 0, "required_skill_terms": ["Retry at most 5 times", "rely on your own judgment"]}
-{"id": "command_copy_in_sync", "input_args": ["--verify"], "checker": "install-command.sh", "expected_exit_code": 0, "required_skill_terms": ["install-command.sh", "commands/commit.md"]}
+{"id": "guide_command_installer", "input": "feat(ci): add workflow lint job", "expected_exit_code": 0, "required_skill_terms": ["install-commands.sh", "commands/commit.md"]}

@@ -38,9 +38,8 @@ If verification still fails after 5 retries, stop retrying and rely on your own 
 - If you are not confident, ask the user how to proceed instead of guessing.
 
 ## Slash Command (/commit)
-This skill ships an optional explicit entry point: the `/commit` command for OpenCode (`commands/commit.md`). If the user invokes `/commit` and it is not installed, offer to install it with the bundled installer:
+This skill ships an optional explicit entry point: the `/commit` command (`commands/commit.md` inside this skill) for OpenCode and Claude Code. If the user wants `/commit` and it is not installed, point them to the repo-level installer — one action installs every skill's commands:
 ```bash
-bash scripts/install-command.sh          # into the current project (.opencode/commands/)
-bash scripts/install-command.sh global   # for all projects (~/.config/opencode/commands/)
+curl -fsSL https://raw.githubusercontent.com/rzkmak/skills/main/scripts/install-commands.sh | bash
 ```
-Only install the command when the user asks for it.
+or, from a checkout of the repo: `./scripts/install-commands.sh [project|global] [agents]` (agents default to `opencode,claude-code`). Only install commands when the user asks for it.

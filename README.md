@@ -74,31 +74,33 @@ validates the whole plan upfront:
 # PASS: Valid commit plan (3 commits, max 5)
 ```
 
-## Commands (OpenCode)
+## Commands (OpenCode & Claude Code)
 
 Skills are invoked by the model when a task matches their description; commands
 are explicit entry points you type. This repo serves both:
 
-- `.opencode/commands/commit.md` → `/commit [instructions]` — drafts, splits,
-  and validates the current changes using the `conventional-commit` skill, with
-  the diff summary attached automatically.
-- `opencode.json` registers `"skills": ["./skills"]`, so opening this repo in
-  OpenCode makes every skill in `skills/` available with no install step.
-
-Commands are OpenCode-specific, and `npx skills add` copies only skill folders —
-so the command definition travels *inside* the skill
-(`skills/conventional-commit/commands/commit.md`). After installing this repo's
-skills, install `/commit` anywhere with the bundled installer:
+- Command templates travel inside each skill (`skills/<name>/commands/*.md`) —
+  `npx skills add` copies only skill folders, so that is how they ride along.
+- One installer installs **every** skill's commands in one action, for both
+  agents:
 
 ```bash
-bash <skill-dir>/scripts/install-command.sh          # current project
-bash <skill-dir>/scripts/install-command.sh global   # all projects
+# from anywhere (clones the repo if needed)
+curl -fsSL https://raw.githubusercontent.com/rzkmak/skills/main/scripts/install-commands.sh | bash
+
+# or from a checkout: scope, agents, repo dir
+./scripts/install-commands.sh project opencode,claude-code
+./scripts/install-commands.sh global claude-code
 ```
 
-`<skill-dir>` is wherever the skill was installed (for OpenCode:
-`.agents/skills/conventional-commit` in a project, or
-`~/.config/opencode/skills/conventional-commit` globally). An eval case keeps
-the shipped template and this repo's own copy in sync.
+Targets: OpenCode `.opencode/commands/` (project) or
+`~/.config/opencode/commands/` (global); Claude Code `.claude/commands/`
+(project) or `~/.claude/commands/` (global). Command filenames must be unique
+repo-wide; the eval gate keeps shipped templates and installed copies in sync.
+
+Working inside this repo with OpenCode needs no install: `opencode.json`
+registers `"skills": ["./skills"]` and `/commit` is committed at
+`.opencode/commands/commit.md`.
 
 ## Development (OpenCode + Context7)
 
@@ -147,10 +149,13 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
 ├── README.md
 ├── scripts/
 │   ├── new-skill.sh         # scaffold a skill + eval gate
+│   ├── install-commands.sh  # install all skills' commands for OpenCode/Claude Code
 │   └── release.sh           # evals, version bump, git tag
 └── skills/
     └── conventional-commit/
         ├── SKILL.md
+        ├── commands/
+        │   └── commit.md    # /commit template (travels with the skill)
         ├── scripts/
         │   ├── check-commit-msg.sh
         │   └── check-commit-plan.sh

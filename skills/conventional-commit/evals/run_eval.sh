@@ -29,8 +29,23 @@ echo "[OK] frontmatter: name=$SKILL_NAME, description present"
 # 2. Syntax-check the runtime validators.
 bash -n "$CHECKER"
 bash -n "$PLAN_CHECKER"
-bash -n "$SKILL_DIR/scripts/install-command.sh"
-echo "[OK] bash -n: check-commit-msg.sh, check-commit-plan.sh, install-command.sh"
+echo "[OK] bash -n: check-commit-msg.sh, check-commit-plan.sh"
+
+# 2b. Inside this repo, shipped command templates must match installed copies.
+ROOT_DIR="$(cd "$SKILL_DIR/../.." && pwd)"
+if [ -f "$ROOT_DIR/plugin.json" ]; then
+  for template in "$SKILL_DIR"/commands/*.md; do
+    [ -f "$template" ] || continue
+    installed="$ROOT_DIR/.opencode/commands/$(basename "$template")"
+    if [ -f "$installed" ]; then
+      diff -q "$installed" "$template" >/dev/null || {
+        echo "FAIL: $installed differs from $template — run ./scripts/install-commands.sh project" >&2
+        exit 1
+      }
+    fi
+  done
+  echo "[OK] commands: shipped templates match installed copies"
+fi
 
 # 3. Run the dataset judge.
 python3 "$SCRIPT_DIR/judge.py"

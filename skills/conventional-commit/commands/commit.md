@@ -2,7 +2,7 @@
 description: Draft, split, and validate commit messages using the conventional-commit skill
 ---
 
-Load the @conventional-commit skill and commit the current changes.
+Use the conventional-commit skill to commit the current changes.
 
 $ARGUMENTS
 

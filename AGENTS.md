@@ -11,6 +11,7 @@ Whenever you create, modify, or validate `plugin.json` or `skills/*/SKILL.md`, q
 2. **Stateless CLI Scripts:** All runtime checks and tools must live as stateless scripts inside `skills/<skill-name>/scripts/` executed via the agent's native bash tool.
 3. **Isolated Per-Skill Evals:** Every skill under `skills/<skill-name>/` MUST contain an executable `evals/run_eval.sh` and `evals/dataset.jsonl`.
 4. **No Autonomous Releases:** When committing new changes, never decide to release on your own. Do NOT run `scripts/release.sh`, create Git tags, or bump versions unless the user explicitly asks for it. Committing is fine; tagging and version bumps are human decisions.
+5. **Per-Skill Commands (optional):** A skill may ship agent command templates as `skills/<skill-name>/commands/*.md`. Command filenames must be unique repo-wide; users install all of them at once for OpenCode and Claude Code via `scripts/install-commands.sh`.
 
 ## 3. How to Add a New Skill
 1. **Consult Context7:** Verify frontmatter and naming constraints against `websites/agentskills_io`.
