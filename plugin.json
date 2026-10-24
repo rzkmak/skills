@@ -2,5 +2,11 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "skills",
   "version": "0.0.1",
-  "description": "Zero-MCP Agent Plugin providing verifiable developer workflow skills with embedded evaluation gates."
+  "description": "Zero-MCP Agent Plugin providing verifiable developer workflow skills with embedded evaluation gates.",
+  "author": {
+    "name": "rzkmak"
+  },
+  "repository": "https://github.com/rzkmak/skills",
+  "license": "Apache-2.0",
+  "keywords": ["git", "conventional-commits", "workflow", "agent-skills", "zero-mcp"]
 }
