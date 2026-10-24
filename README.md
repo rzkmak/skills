@@ -85,8 +85,20 @@ are explicit entry points you type. This repo serves both:
 - `opencode.json` registers `"skills": ["./skills"]`, so opening this repo in
   OpenCode makes every skill in `skills/` available with no install step.
 
-Commands are OpenCode-specific and project-scoped; to use `/commit` in other
-projects, copy the file to `~/.config/opencode/commands/`.
+Commands are OpenCode-specific, and `npx skills add` copies only skill folders —
+so the command definition travels *inside* the skill
+(`skills/conventional-commit/commands/commit.md`). After installing this repo's
+skills, install `/commit` anywhere with the bundled installer:
+
+```bash
+bash <skill-dir>/scripts/install-command.sh          # current project
+bash <skill-dir>/scripts/install-command.sh global   # all projects
+```
+
+`<skill-dir>` is wherever the skill was installed (for OpenCode:
+`.agents/skills/conventional-commit` in a project, or
+`~/.config/opencode/skills/conventional-commit` globally). An eval case keeps
+the shipped template and this repo's own copy in sync.
 
 ## Development (OpenCode + Context7)
 
