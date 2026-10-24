@@ -98,9 +98,10 @@ Targets: OpenCode `.opencode/commands/` (project) or
 (project) or `~/.claude/commands/` (global). Command filenames must be unique
 repo-wide; the eval gate keeps shipped templates and installed copies in sync.
 
-Working inside this repo with OpenCode needs no install: `opencode.json`
-registers `"skills": ["./skills"]` and `/commit` is committed at
-`.opencode/commands/commit.md`.
+Working inside this repo with OpenCode: `opencode.json` registers
+`"skills": ["./skills"]`, and the commands work once installed — run
+`./scripts/install-commands.sh project` in this checkout (the installed
+copies stay untracked, as local working files).
 
 ## Development (OpenCode + Context7)
 

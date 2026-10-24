@@ -37,8 +37,12 @@ If verification still fails after 5 retries, stop retrying and rely on your own 
 - If you are confident the message or plan is valid and the validator is wrong for this case, proceed and state your reasoning next to the commit.
 - If you are not confident, ask the user how to proceed instead of guessing.
 
-## Slash Command (/commit)
-This skill ships an optional explicit entry point: the `/commit` command (`commands/commit.md` inside this skill) for OpenCode and Claude Code. If the user wants `/commit` and it is not installed, point them to the repo-level installer — one action installs every skill's commands:
+## Slash Commands (/commit, /commit-push)
+This skill ships two optional explicit entry points for OpenCode and Claude Code:
+- `/commit` (`commands/commit.md`) — draft, split, and validate commit messages.
+- `/commit-push` (`commands/commit-push.md`) — the same, then push the branch to its remote immediately (never force-push).
+
+If the user wants one of them and it is not installed, point them to the repo-level installer — one action installs every skill's commands:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rzkmak/skills/main/scripts/install-commands.sh | bash
 ```
