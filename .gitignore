@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python bytecode (judge.py imports, if anyone ever byte-compiles)
+__pycache__/
+*.py[cod]
+
+# Transient sed temp files from scripts/release.sh version bumps
+*.tmp
+
+# Zero-MCP policy: an MCP config must never ship with this plugin
+mcp.json
+
+# Editors
+.idea/
+.vscode/
