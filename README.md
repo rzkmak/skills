@@ -1,5 +1,7 @@
 # skills
 
+[![skills.sh](https://skills.sh/b/rzkmak/skills)](https://skills.sh/rzkmak/skills)
+
 A **Zero-MCP Agent Plugin** ([Agent Plugins 1.0](https://agent-plugins.org)) that
 provides verifiable developer workflow skills. Every skill ships a stateless CLI
 validator plus an embedded evaluation gate, so agents prove their work with plain
@@ -24,10 +26,23 @@ is never shipped with the plugin. The published artifact contains **no
 
 ## Installation
 
-Place this repository inside your agent's plugin directory:
+Install a single skill into your agent with the [skills CLI](https://skills.sh)
+(works with OpenCode, Claude Code, Cursor, and 75+ other agents):
 
 ```bash
-git clone <this-repo> <your-agent-plugins-dir>/skills
+npx skills add rzkmak/skills --skill conventional-commit
+```
+
+Or install every skill in this repo:
+
+```bash
+npx skills add rzkmak/skills
+```
+
+Or install as an Agent Plugin (for Agent Plugins 1.0 clients):
+
+```bash
+git clone https://github.com/rzkmak/skills ~/.agents/plugins/skills
 ```
 
 The manifest is `plugin.json`; skills are auto-discovered from `skills/`.
