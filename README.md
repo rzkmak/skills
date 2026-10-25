@@ -31,6 +31,7 @@ Install a single skill into your agent with the [skills CLI](https://skills.sh)
 ```bash
 npx skills add rzkmak/skills --skill conventional-commit
 npx skills add rzkmak/skills --skill implement-go-api
+npx skills add rzkmak/skills --skill unslop-ai-codebase
 ```
 
 Or install every skill in this repo:
@@ -47,11 +48,19 @@ git clone https://github.com/rzkmak/skills ~/.agents/plugins/skills
 
 The manifest is `plugin.json`; skills are auto-discovered from `skills/`.
 
+## Skills
+
+| Skill | Entry point | What it does |
+| --- | --- | --- |
+| `conventional-commit` | model-invoked + `/commit`, `/commit-push` | Draft, split, and validate Conventional Commit messages before committing. |
+| `implement-go-api` | model-invoked | Enforce a standard domain-modular layout for Go + Gin APIs. |
+| `unslop-ai-codebase` | `/unslop`, `/unslop-diff` only (`disable-model-invocation: true`) | Remove AI slop from comments, docs, and prose while preserving step markers, background context, and decisions; `scripts/check.sh` verifies pragmas and runtime code survive the rewrite. |
+
 ## Usage
 
-Agents activate skills by the `description` frontmatter. For example, when
-drafting a commit message, the `conventional-commit` skill requires the agent to
-verify itself before committing:
+Agents activate model-invocable skills by the `description` frontmatter. For
+example, when drafting a commit message, the `conventional-commit` skill
+requires the agent to verify itself before committing:
 
 ```bash
 ./skills/conventional-commit/scripts/check-commit-msg.sh "feat(auth): add jwt token refresh endpoint"
@@ -78,7 +87,9 @@ validates the whole plan upfront:
 ## Commands (OpenCode & Claude Code)
 
 Skills are invoked by the model when a task matches their description; commands
-are explicit entry points you type. This repo serves both:
+are explicit entry points you type. Skills with `disable-model-invocation:
+true` (e.g. `unslop-ai-codebase`) never trigger on their own — their commands
+are the only way to run them. This repo serves both:
 
 - Command templates travel inside each skill (`skills/<name>/commands/*.md`) —
   `npx skills add` copies only skill folders, so that is how they ride along.
@@ -178,7 +189,8 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     ├── conventional-commit/
     │   ├── SKILL.md
     │   ├── commands/
-    │   │   └── commit.md    # /commit template (travels with the skill)
+    │   │   ├── commit.md      # /commit template (travels with the skill)
+    │   │   └── commit-push.md # /commit-push template
     │   ├── scripts/
     │   │   ├── check-commit-msg.sh
     │   │   └── check-commit-plan.sh
@@ -187,16 +199,28 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     │       ├── judge.py
     │       └── run_eval.sh
     └── implement-go-api/
-        ├── SKILL.md          # domain-modular layout standard for Go + Gin
+    │       ├── SKILL.md          # domain-modular layout standard for Go + Gin
+    │       ├── scripts/
+    │       │   ├── check_layout.sh   # validate a whole project directory
+    │       │   └── check_snippet.sh  # validate a single Go file
+    │       └── evals/
+    │           ├── dataset.jsonl
+    │           ├── fixtures/     # valid + invalid sample projects and snippets
+    │           ├── judge.py
+    │           ├── run_eval.sh   # deterministic gate (must exit 0)
+    │           └── llm/          # optional behavioral suite (deepeval GEval)
+    │               ├── test_implement_go_api.py
+    │               └── .venv/    # gitignored, created by run_eval_llm.sh
+    └── unslop-ai-codebase/
+        ├── SKILL.md          # prune AI slop from comments/docs; disable-model-invocation
+        ├── commands/
+        │   ├── unslop.md         # /unslop template
+        │   └── unslop-diff.md    # /unslop-diff template (uncommitted changes only)
         ├── scripts/
-        │   ├── check_layout.sh   # validate a whole project directory
-        │   └── check_snippet.sh  # validate a single Go file
+        │   └── check.sh          # pragmas intact + runtime code unchanged after rewrite
         └── evals/
             ├── dataset.jsonl
-            ├── fixtures/     # valid + invalid sample projects and snippets
+            ├── fixtures/         # before/after rewrite samples (pass + fail)
             ├── judge.py
-            ├── run_eval.sh   # deterministic gate (must exit 0)
-            └── llm/          # optional behavioral suite (deepeval GEval)
-                ├── test_implement_go_api.py
-                └── .venv/    # gitignored, created by run_eval_llm.sh
+            └── run_eval.sh       # deterministic gate (must exit 0)
 ```

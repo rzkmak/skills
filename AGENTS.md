@@ -12,6 +12,11 @@ Whenever you create, modify, or validate `plugin.json` or `skills/*/SKILL.md`, q
 3. **Isolated Per-Skill Evals:** Every skill under `skills/<skill-name>/` MUST contain an executable `evals/run_eval.sh` and `evals/dataset.jsonl`.
 4. **No Autonomous Releases:** When committing new changes, never decide to release on your own. Do NOT run `scripts/release.sh`, create Git tags, or bump versions unless the user explicitly asks for it. Committing is fine; tagging and version bumps are human decisions.
 5. **Per-Skill Commands (optional):** A skill may ship agent command templates as `skills/<skill-name>/commands/*.md`. Command filenames must be unique repo-wide; users install all of them at once for OpenCode and Claude Code via `scripts/install-commands.sh`.
+6. **README Must Stay in Sync (never forget):** Whenever a skill is added, removed, renamed, or its commands/scripts/evals layout changes, update `README.md` in the same change set:
+   - the single-skill install examples (`npx skills add rzkmak/skills --skill <name>`),
+   - the **Skills** table (name, entry points — note `disable-model-invocation: true` skills are command-only),
+   - the **Layout** tree (`skills/<name>/` files, including `commands/*.md`).
+   Missing any of these is an incomplete task, same as a failing eval gate.
 
 ## 3. How to Add a New Skill
 1. **Consult Context7:** Verify frontmatter and naming constraints against `websites/agentskills_io`.
@@ -21,7 +26,8 @@ Whenever you create, modify, or validate `plugin.json` or `skills/*/SKILL.md`, q
    - Add deterministic helper or validation scripts in `skills/<skill-name>/scripts/`.
    - Add at least 4 pass/fail test fixtures in `skills/<skill-name>/evals/dataset.jsonl`.
 4. **Evaluate:** Run `./skills/<skill-name>/evals/run_eval.sh`. Do not mark a task complete until it exits with code `0`. If the skill has an LLM eval (`evals/run_eval_llm.sh`, see §4) and you changed its `SKILL.md` guidance, run that too — it is optional, never a completion gate.
-5. **Release (only on explicit request):** When — and only when — the user asks for a release, run `./scripts/release.sh <MAJOR.MINOR.PATCH> [--changed-only]` to execute all skill evals, sync versions, and create a Git tag. Never choose the version, the timing, or whether to release at all by yourself.
+5. **Update README:** Per §2 rule 6, add the new skill to `README.md` — install examples, the Skills table, and the Layout tree — before committing.
+6. **Release (only on explicit request):** When — and only when — the user asks for a release, run `./scripts/release.sh <MAJOR.MINOR.PATCH> [--changed-only]` to execute all skill evals, sync versions, and create a Git tag. Never choose the version, the timing, or whether to release at all by yourself.
 
 ## 4. LLM Evals (deepeval, Optional Suite)
 Deterministic evals (`evals/run_eval.sh`) remain the blocking gate: they must pass with exit code `0` and never require network access or API keys. LLM-based behavioral evals are a separate, optional suite next to them.
