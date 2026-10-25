@@ -1,0 +1,12 @@
+{"id": "valid_project_layout", "checker": "check_layout.sh", "input_args": ["evals/fixtures/valid_project"], "expected_exit_code": 0, "required_skill_terms": ["go.mod", "cmd/", "internal/", "Register"]}
+{"id": "invalid_god_main", "checker": "check_layout.sh", "input_args": ["evals/fixtures/god_main"], "expected_exit_code": 1, "required_skill_terms": ["composition root"]}
+{"id": "invalid_gin_in_service", "checker": "check_layout.sh", "input_args": ["evals/fixtures/gin_service"], "expected_exit_code": 1, "required_skill_terms": ["gin.Context"]}
+{"id": "invalid_bind_json", "checker": "check_layout.sh", "input_args": ["evals/fixtures/bind_json"], "expected_exit_code": 1, "required_skill_terms": ["ShouldBind"]}
+{"id": "invalid_gin_default", "checker": "check_layout.sh", "input_args": ["evals/fixtures/gin_default"], "expected_exit_code": 1, "required_skill_terms": ["gin.New()"]}
+{"id": "snippet_valid_handler", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/handler_should_bind.go"], "expected_exit_code": 0, "required_skill_terms": ["ShouldBind"]}
+{"id": "snippet_handler_bind_json", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/handler_bind_json.go"], "expected_exit_code": 1, "required_skill_terms": ["ShouldBind"]}
+{"id": "snippet_service_no_gin", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/service_with_gin.go"], "expected_exit_code": 1, "required_skill_terms": ["gin.Context"]}
+{"id": "snippet_main_no_routes", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/main_with_routes.go"], "expected_exit_code": 1, "required_skill_terms": ["composition root"]}
+{"id": "snippet_model_no_binding_tags", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/model_with_binding.go"], "expected_exit_code": 1, "required_skill_terms": ["dto.go"]}
+{"id": "snippet_valid_router_gin_new", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/router_gin_new.go"], "expected_exit_code": 0, "required_skill_terms": ["gin.New()"]}
+{"id": "guide_verification_rules", "checker": "check_snippet.sh", "input_args": ["evals/fixtures/snippets/handler_should_bind.go"], "expected_exit_code": 0, "required_skill_terms": ["check_layout.sh", "check_snippet.sh", "Retry at most 5 times", "handler → service → repository"]}
