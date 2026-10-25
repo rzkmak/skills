@@ -1,0 +1,3 @@
+def scale(value, factor):
+    # Step 1: Multiply value by factor
+    return value + factor
