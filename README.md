@@ -31,6 +31,7 @@ Install a single skill into your agent with the [skills CLI](https://skills.sh)
 ```bash
 npx skills add rzkmak/skills --skill conventional-commit
 npx skills add rzkmak/skills --skill implement-go-api
+npx skills add rzkmak/skills --skill implement-spring-kotlin-core
 npx skills add rzkmak/skills --skill unslop-ai-codebase
 ```
 
@@ -54,6 +55,7 @@ The manifest is `plugin.json`; skills are auto-discovered from `skills/`.
 | --- | --- | --- |
 | `conventional-commit` | model-invoked + `/commit`, `/commit-push` | Draft, split, and validate Conventional Commit messages before committing. |
 | `implement-go-api` | model-invoked | Enforce a standard domain-modular layout for Go + Gin APIs. |
+| `implement-spring-kotlin-core` | model-invoked | Scaffold and implement Spring Boot 4 + Kotlin 2 backends (Java 25, Spring MVC, Virtual Threads, JPA) with the standard package layout, `main` / `unitTest` / `functionalTest` source sets, and Testcontainers / WireMock / Database Rider boundaries. |
 | `unslop-ai-codebase` | `/unslop`, `/unslop-diff` only (`disable-model-invocation: true`) | Remove AI slop from comments, docs, and prose while preserving step markers, background context, and decisions; `scripts/check.sh` verifies pragmas and runtime code survive the rewrite. |
 
 ## Usage
@@ -138,6 +140,7 @@ validator plus 4 starter fixtures) so every skill is born testable.
 ```bash
 ./skills/conventional-commit/evals/run_eval.sh
 ./skills/implement-go-api/evals/run_eval.sh
+./skills/implement-spring-kotlin-core/evals/run_eval.sh
 ```
 
 ### Optional LLM behavioral evals
@@ -198,7 +201,7 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     │       ├── dataset.jsonl
     │       ├── judge.py
     │       └── run_eval.sh
-    └── implement-go-api/
+    ├── implement-go-api/
     │       ├── SKILL.md          # domain-modular layout standard for Go + Gin
     │       ├── scripts/
     │       │   ├── check_layout.sh   # validate a whole project directory
@@ -211,6 +214,20 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     │           └── llm/          # optional behavioral suite (deepeval GEval)
     │               ├── test_implement_go_api.py
     │               └── .venv/    # gitignored, created by run_eval_llm.sh
+    ├── implement-spring-kotlin-core/
+    │   ├── SKILL.md          # Spring Boot 4 + Kotlin 2 layout and testing standard
+    │   ├── references/
+    │   │   └── architecture-and-examples.md  # layered architecture patterns + code examples
+    │   ├── scripts/
+    │   │   ├── check-layout.sh   # source sets + 10 standard packages, src/test forbidden
+    │   │   └── check-source.sh   # layer boundaries, namespace + annotation rules
+    │   └── evals/
+    │       ├── dataset.jsonl
+    │       ├── judge.py
+    │       ├── run_eval.sh   # deterministic gate (must exit 0)
+    │       └── llm/          # optional behavioral suite (deepeval GEval)
+    │           ├── test_skill_behavior.py
+    │           └── .venv/    # gitignored, created by run_eval_llm.sh
     └── unslop-ai-codebase/
         ├── SKILL.md          # prune AI slop from comments/docs; disable-model-invocation
         ├── commands/
