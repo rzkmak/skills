@@ -1,11 +1,11 @@
 ---
-name: implement-go-layout
+name: implement-go-api
 description: Use when creating or restructuring a Go API project with the Gin framework to enforce a standard domain modular layout for large scale applications with cmd internal packages handlers services repositories and middleware
 metadata:
   version: "0.1.0"
   stack: "Go >= 1.22, Gin v1.x (current release v1.12.0)"
 ---
-# Implement Go Layout Skill
+# Implement Go API Skill
 
 Enforce a standard, large-scale layout for Go + Gin API projects: **domain-modular packages under `internal/`**, layered handler → service → repository, with `cmd/` as the only entry point.
 

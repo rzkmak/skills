@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # check_layout.sh — validate a Go + Gin project against the standard
-# domain-modular layout prescribed by skills/implement-go-layout.
+# domain-modular layout prescribed by skills/implement-go-api.
 #
 # Usage:
 #   bash scripts/check_layout.sh <project-dir>

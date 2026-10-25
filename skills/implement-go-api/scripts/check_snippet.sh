@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # check_snippet.sh — validate a single Go file against the layout rules
-# prescribed by skills/implement-go-layout. Use it on a file the agent is
+# prescribed by skills/implement-go-api. Use it on a file the agent is
 # about to write (handler, service, repository, model, router, main).
 #
 # Usage:

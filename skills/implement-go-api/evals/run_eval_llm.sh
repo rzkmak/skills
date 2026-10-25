@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # run_eval_llm.sh — optional LLM behavioral eval suite for the
-# implement-go-layout skill (deepeval GEval as the judge).
+# implement-go-api skill (deepeval GEval as the judge).
 #
 # NOT part of the deterministic gate (evals/run_eval.sh) and never a completion
 # gate: judge scores are probabilistic and this suite costs tokens. Run it
@@ -20,7 +20,7 @@ VENV="$SCRIPT_DIR/llm/.venv"
 # 1. Loud environment check. Only the presence of the variables is inspected.
 for var in OPENAI_BASE_URL OPENAI_API_KEY OPENAI_DEFAULT_MODEL; do
   if [ -z "${!var:-}" ]; then
-    echo "ERROR: environment variable $var is not set — the LLM eval suite requires it (see skills/implement-go-layout/evals/llm/)" >&2
+    echo "ERROR: environment variable $var is not set — the LLM eval suite requires it (see skills/implement-go-api/evals/llm/)" >&2
     exit 1
   fi
 done
@@ -35,4 +35,4 @@ fi
 
 # 3. Run the behavioral tests. Generation and judging share the endpoint and
 #    model already configured via the environment above.
-exec "$VENV/bin/python" -m pytest "$SCRIPT_DIR/llm/test_implement_go_layout.py" -v "$@"
+exec "$VENV/bin/python" -m pytest "$SCRIPT_DIR/llm/test_implement_go_api.py" -v "$@"

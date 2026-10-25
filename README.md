@@ -30,7 +30,7 @@ Install a single skill into your agent with the [skills CLI](https://skills.sh)
 
 ```bash
 npx skills add rzkmak/skills --skill conventional-commit
-npx skills add rzkmak/skills --skill implement-go-layout
+npx skills add rzkmak/skills --skill implement-go-api
 ```
 
 Or install every skill in this repo:
@@ -126,7 +126,7 @@ validator plus 4 starter fixtures) so every skill is born testable.
 
 ```bash
 ./skills/conventional-commit/evals/run_eval.sh
-./skills/implement-go-layout/evals/run_eval.sh
+./skills/implement-go-api/evals/run_eval.sh
 ```
 
 ### Optional LLM behavioral evals
@@ -143,7 +143,7 @@ changing a skill's guidance:
 export OPENAI_BASE_URL=...      # OpenAI-compatible endpoint
 export OPENAI_API_KEY=...       # never echoed or written anywhere
 export OPENAI_DEFAULT_MODEL=...
-./skills/implement-go-layout/evals/run_eval_llm.sh
+./skills/implement-go-api/evals/run_eval_llm.sh
 ```
 
 Dependencies install into a gitignored per-skill venv (`evals/llm/.venv`);
@@ -186,7 +186,7 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
     │       ├── dataset.jsonl
     │       ├── judge.py
     │       └── run_eval.sh
-    └── implement-go-layout/
+    └── implement-go-api/
         ├── SKILL.md          # domain-modular layout standard for Go + Gin
         ├── scripts/
         │   ├── check_layout.sh   # validate a whole project directory
@@ -197,6 +197,6 @@ policy), if `plugin.json` is not valid JSON, or if any skill eval fails.
             ├── judge.py
             ├── run_eval.sh   # deterministic gate (must exit 0)
             └── llm/          # optional behavioral suite (deepeval GEval)
-                ├── test_implement_go_layout.py
+                ├── test_implement_go_api.py
                 └── .venv/    # gitignored, created by run_eval_llm.sh
 ```

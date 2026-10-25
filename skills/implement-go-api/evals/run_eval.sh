@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# run_eval.sh — evaluation gate for the implement-go-layout skill.
+# run_eval.sh — evaluation gate for the implement-go-api skill.
 # Exits 0 only if every check passes.
 
 set -euo pipefail

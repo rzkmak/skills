@@ -1,4 +1,4 @@
-"""LLM behavioral evals for the implement-go-layout skill (optional suite).
+"""LLM behavioral evals for the implement-go-api skill (optional suite).
 
 The model under test generates behavior with SKILL.md in context. Bundled
 deterministic checkers grade everything they can (layout rules, exit codes);

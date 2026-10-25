@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Zero-dependency judge for the implement-go-layout skill.
+"""Zero-dependency judge for the implement-go-api skill.
 
 Reads SKILL.md and evals/dataset.jsonl, then for every case:
   * asserts each required_skill_terms entry appears in SKILL.md, and
