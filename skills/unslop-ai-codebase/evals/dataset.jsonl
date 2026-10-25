@@ -1,0 +1,5 @@
+{"id": "valid_plain_file_no_orig", "input": "evals/fixtures/valid_plain.py", "expected_exit_code": 0, "required_skill_terms": ["Why vs. What", "NEVER TOUCH", "nolint"]}
+{"id": "valid_pragmas_intact", "input": "evals/fixtures/valid_pragmas.py", "expected_exit_code": 0, "required_skill_terms": ["Step 1", "disable-model-invocation", "noqa"]}
+{"id": "invalid_pragma_lost", "input": "evals/fixtures/invalid_pragma_lost.py", "expected_exit_code": 1, "required_skill_terms": ["NEVER TOUCH"]}
+{"id": "invalid_code_changed", "input": "evals/fixtures/invalid_code_changed.py", "expected_exit_code": 1, "required_skill_terms": ["Preserve 100% of runtime behavior"]}
+{"id": "invalid_missing_file", "input": "evals/fixtures/does_not_exist.py", "expected_exit_code": 1, "required_skill_terms": ["check.sh"]}
